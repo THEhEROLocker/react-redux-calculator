@@ -1,0 +1,3 @@
+export const DIGIT_PRESSED = 'DIGIT_PRESSED'
+export const OPERATION_PRESSED = 'OPERATION_PRESSED'
+export const CLEAR = 'CLEAR'
