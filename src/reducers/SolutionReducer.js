@@ -32,10 +32,17 @@ function parseNewOperation(oldState, operation) {
         return oldState;
     }
     else if (operation === "+") {
-        
+        oldState.solutionDisplayValue = evaluateSolution(...oldState.inputHistory);
+        console.log(oldState.solutionDisplayValue)
+        oldState.inputHistory = [oldState.solutionDisplayValue, '+']
+        oldState.lastOperation = "+"
+        return oldState;        
     }
     else if(operation === '-'){
-
+        oldState.solutionDisplayValue = evaluateSolution(...oldState.inputHistory);
+        oldState.inputHistory = [oldState.solutionDisplayValue, '-']
+        oldState.lastOperation = "-"
+        return oldState; 
     }
     else if(operation === 'x'){
         
