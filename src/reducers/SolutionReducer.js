@@ -27,8 +27,23 @@ function parseNewOperation(oldState, operation) {
         oldState.lastOperation = operation;
         return oldState;
     }
+    else if(oldState.inputHistory.length === 5){
+        let result = evaluateSolution(...oldState.inputHistory.slice(2));
+        oldState.solutionDisplayValue = evaluateSolution(...oldState.inputHistory.slice(0,2),result);
+        if(operation === '='){
+            oldState.inputHistory = [oldState.solutionDisplayValue];
+            oldState.lastOperation = "";
+        }
+        else{
+            oldState.inputHistory = [oldState.solutionDisplayValue, operation];
+            oldState.lastOperation = operation;
+        }
+        return oldState;
+    }
     else if (operation === '='){
         oldState.solutionDisplayValue = evaluateSolution(...oldState.inputHistory);
+        oldState.inputHistory = [oldState.solutionDisplayValue];
+        oldState.lastOperation = "";
         return oldState;
     }
     else if (operation === "+") {
@@ -45,10 +60,30 @@ function parseNewOperation(oldState, operation) {
         return oldState; 
     }
     else if(operation === 'x'){
-        
+        if(oldState.lastOperation === '+' || oldState.lastOperation === '-'){
+            oldState.inputHistory.push(operation);
+            oldState.lastOperation = operation;
+            return oldState;
+        }
+        else{
+            oldState.solutionDisplayValue = evaluateSolution(...oldState.inputHistory);
+            oldState.inputHistory = [oldState.solutionDisplayValue, 'x']
+            oldState.lastOperation = "x"
+            return oldState; 
+        }
     }
     else if(operation === '÷'){
-        
+        if(oldState.lastOperation === '+' || oldState.lastOperation === '-'){
+            oldState.inputHistory.push(operation);
+            oldState.lastOperation = operation;
+            return oldState;
+        }
+        else{
+            oldState.solutionDisplayValue = evaluateSolution(...oldState.inputHistory);
+            oldState.inputHistory = [oldState.solutionDisplayValue, '÷']
+            oldState.lastOperation = "÷"
+            return oldState; 
+        }
     }
 }
 
